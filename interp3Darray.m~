@@ -1,0 +1,21 @@
+function arri = interp3Darray(x, arr, xi)
+%% arri = interp3Darray(arr, x, xi) 
+%
+% Interpolates a 3x3xn array from x to xi
+% INPUTS:
+%
+%%
+sizea = size(arr);
+arri = zeros(sizea(1), sizea(2), length(xi));
+for n = 1:length(xi)
+    arri(1,1,:) = interp1(x, squeeze(arr(1,1,:))', xi);
+    arri(1,2,:) = interp1(x, squeeze(arr(1,2,:)), xi);
+    arri(1,3,:) = interp1(x, squeeze(arr(1,3,:)), xi);
+    arri(2,1,:) = interp1(x, squeeze(arr(2,1,:)), xi);
+    arri(2,2,:) = interp1(x, squeeze(arr(2,2,:)), xi);
+    arri(2,3,:) = interp1(x, squeeze(arr(2,3,:)), xi);
+    arri(3,1,:) = interp1(x, squeeze(arr(3,1,:)), xi);
+    arri(3,2,:) = interp1(x, squeeze(arr(3,2,:)), xi);
+    arri(3,3,:) = interp1(x, squeeze(arr(3,3,:)), xi);
+end
+end
