@@ -1,0 +1,12 @@
+function [x,y,z] = solve_rotate3(R)
+%% SOLVE_ROTATE3 solves a 3D rotation matrix for its 3 constituent Euler angles
+% 
+% 
+% 
+% INPUTS:
+%   R: 3x3 rotation matrix
+% 
+
+
+
+end
