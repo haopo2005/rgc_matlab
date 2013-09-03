@@ -12,7 +12,7 @@ function Ro = interp_3Drotmat(xi, Ri, xo, method)
 % OUTPUTS:
 %   Ro:
 %
-%%
+
 leni = length(xi);
 leno = length(xo);
 Ro = zeros(3,3,leno);
@@ -21,7 +21,15 @@ eo = zeros(3,leno); % euler angles for output array
 
 % determine input euler angles
 for n = 1:leni
-  [x,y,z] = solve_rotate3(Ri(:,:,n));
+  [x,y,z] = solve_rotate3(Ri(:,:,n)); % will return 2 solution sets
+  % use the euler angle solution which has the smallest change between
+  % epochs
+  if n==1
+    x = x(1); y = y(1); z = z(1); % this could probably be done better
+  else
+    [m, eul_idx] = min(abs( (z+2*pi)-(ei(3,n-1)+2*pi) ));
+    x=x(eul_idx); y=y(eul_idx); z=z(eul_idx);
+  end
   ei(:,n) = [x;y;z];
 end
 
