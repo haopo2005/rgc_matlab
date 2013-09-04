@@ -1,7 +1,10 @@
-function Ro = interp_3Drotmat(xi, Ri, xo, method)
-%% arri = interp3Darray(arr, x, xi) 
-%
+function Ro = interp_3Drotmat(xi, Ri, xo, method, varargin)
 % Interpolates a 3x3xn array of 3x3 rotation matrices from xi to xo
+% 
+% USAGE:
+%   Ro = interp_3Drotmat(xi, Ri, xo, method)
+%   Ro = interp_3Drotmat(xi, Ri, xo, method, 2)
+%     - this uses the second solution to all rotation matrices
 % 
 % INPUTS:
 %   xi:
@@ -12,6 +15,13 @@ function Ro = interp_3Drotmat(xi, Ri, xo, method)
 % OUTPUTS:
 %   Ro:
 %
+
+if nargin==5
+  rot_soln = varargin{1};
+  spec_rot_soln = true;
+else
+  spec_rot_soln = false;
+end
 
 leni = length(xi);
 leno = length(xo);
@@ -24,11 +34,15 @@ for n = 1:leni
   [x,y,z] = solve_rotate3(Ri(:,:,n)); % will return 2 solution sets
   % use the euler angle solution which has the smallest change between
   % epochs
-  if n==1
+  if n==1 && ~spec_rot_soln
     x = x(1); y = y(1); z = z(1); % this could probably be done better
+  elseif spec_rot_soln
+    x = x(rot_soln); y = y(rot_soln); z = z(rot_soln);
+  elseif ~spec_rot_soln
+    [m, rot_soln] = min(abs( (z+2*pi)-(ei(3,n-1)+2*pi) ));
+    x=x(rot_soln); y=y(rot_soln); z=z(rot_soln);
   else
-    [m, eul_idx] = min(abs( (z+2*pi)-(ei(3,n-1)+2*pi) ));
-    x=x(eul_idx); y=y(eul_idx); z=z(eul_idx);
+    error('?');
   end
   ei(:,n) = [x;y;z];
 end
