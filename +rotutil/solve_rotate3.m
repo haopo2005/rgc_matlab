@@ -5,7 +5,9 @@ function varargout = solve_rotate3(R)
 % 
 % This assumes that the rotation matrix was formed by rotating about the
 % axes in x,y,z order. It presents the two possible solutions for the
-% matrix
+% matrix. The first solution represents a y rotation that lies in either
+% the first or second quandrant. The second solution represents a y
+% rotation that lies in either the third or fourth quadrant.
 % 
 % USAGE:
 %   [x,y,z] = solve_rotate3(R)
@@ -19,7 +21,6 @@ function varargout = solve_rotate3(R)
 %   x,y,z: radian angles
 %
 %
-
 if all(R(3,1)~=[-1,1])
   y1 = -asin(R(3,1));
   x1 = atan2( R(3,2)/cos(y1) , R(3,3)/cos(y1) );

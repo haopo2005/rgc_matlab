@@ -31,7 +31,7 @@ eo = zeros(3,leno); % euler angles for output array
 
 % determine input euler angles
 for n = 1:leni
-  [x,y,z] = solve_rotate3(Ri(:,:,n)); % will return 2 solution sets
+  [x,y,z] = rotutil.solve_rotate3(Ri(:,:,n)); % will return 2 solution sets
   % use the euler angle solution which has the smallest change between
   % epochs
   if n==1 && ~spec_rot_soln
@@ -54,7 +54,7 @@ eo(3,:) = interp1(xi, ei(3,:), xo, method, 'extrap');
 
 % create output rotation matrices
 for n = 1:leno
-  Ro(:,:,n) = rotate3(eo(:,n),'rad');  
+  Ro(:,:,n) = rotutil.rotate3(eo(:,n),'rad');  
 end
 
 end

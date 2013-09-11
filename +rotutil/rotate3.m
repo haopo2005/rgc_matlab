@@ -23,44 +23,12 @@ elseif nargin == 4
 end
 
 if strcmp(units,'deg')
-    x = rad(x); y = rad(y); z = rad(z); 
+    x = rad2deg(x); y = rad2deg(y); z = rad2deg(z); 
 elseif strcmp(units,'rad')
     %
 else
     error('need "rad" or "deg" for units');
 end
-
-% len = length(y);
-% if length(x) ~= len || len ~= length(z)
-%     error ('need vector inputs of equal lengths');
-% end
-% 
-% if len > 1
-%     
-%     Rx = zeros(3,3,len);
-%     Rx(1,1,:) = ones(1,1,len);
-%     Rx(2,2,:) = cos(x);
-%     Rx(2,3,:) = -sin(x);
-%     Rx(3,2,:) = sin(x);
-%     Rx(3,3,:) = cos(x);
-% 
-%     Ry = zeros(3,3,len);
-%     Ry(1,1,:) = cos(y);
-%     Ry(1,3,:) = sin(y);
-%     Ry(2,2,:) = ones(1,1,len);
-%     Ry(3,1,:) = -sin(y);
-%     Ry(3,3,:) = cos(y);
-% 
-%     Rz = zeros(3,3,len);
-%     Rz(1,1,:) = cos(z);
-%     Rz(1,2,:) = -sin(z);
-%     Rz(2,1,:) = sin(z);
-%     Rz(2,2,:) = cos(z);
-%     Rz(3,3,:) = ones(1,1,len);
-%     
-%     warning('unfinished function');
-% 
-% else
     
 Rx = [1 0 0; 0 cos(x) -sin(x); 0 sin(x) cos(x)];
 Ry = [cos(y) 0 sin(y); 0 1 0; -sin(y) 0 cos(y)];

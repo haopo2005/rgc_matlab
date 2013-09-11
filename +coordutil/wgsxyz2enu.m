@@ -1,15 +1,16 @@
-% Function enu = wgsxyz2enu(xyz, reflat, reflon, refalt) returns
-% a 3 x 1 vector enu which represents the East, North, and Up
+function enu=wgsxyz2enu(xyz, reflat, reflon, refalt)
+% WGSXYZ2ENU returns a 3 x 1 vector enu which represents the East, North, and Up
 % coordinates (in meters) of a point with WGS84 xyz coordinates
 % xyz (3 x 1 vector, units in meters) in an ENU coordinate system
 % located at latitude reflat (degrees), longitude reflon (degrees)
 % and altitude above the WGS84 ellipsoid refalt (meters)
 %
+% USAGE:
+%   enu = wgsxyz2enu(xyz, reflat, reflon, refalt)
+% 
 % Note: Requires functions wgslla2xyz.m and rot.m to be in the 
 % same directory
-
-function enu=wgsxyz2enu(xyz, reflat, reflon, refalt)
-
+%
 [m n] = size(xyz);
 if m ~= 3 | n ~= 1
 	error('wgsxyz2enu: xyz input vector must be 3 x 1');
