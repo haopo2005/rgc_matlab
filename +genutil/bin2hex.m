@@ -10,10 +10,7 @@ function hex = bin2hex(bin)
 %   hex: [1 x n/8 string of hexadecimal bytes
 % 
 % USAGE:
-%   h = bin2hex(ones(1,8)) --> 'ff'
+%   h = bin2hex(ones(1,8)) --> 'FF'
 % 
-
 hex = dec2hex(bin2dec(num2str(bin)));
-
-
 end

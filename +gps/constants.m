@@ -41,3 +41,14 @@ tap = [2 6;
        1 7;
        2 8;
        4 10];
+
+% Signal frequencies
+fCA = 1.023e6; % C/A code frequency, Hz
+fPY = 10.23e6; % P(Y) code frequency, Ha
+fL1 = 1575.42e6; % L1 frequency, Hz
+fL2 = 1227.60e6; % L2 frequency, Hz
+
+% Minimum received signal power
+PC1 = -158.5; % L1 C/A code, dBW
+PY1 = -161.5; % L1 P(Y) code, dBW
+PY2 = -164.5; % L2 P(Y) code, dBW

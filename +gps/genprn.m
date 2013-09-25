@@ -9,7 +9,7 @@ function prn = genprn(n, nchips, scale, freq)
 %   len: desired length of the PRN 
 %   scale: 2 element vector of desired values for low and high bits,
 %     respectively
-%   
+%   freq: upsamples by multiplying the chiprate
 % 
 % OUTPUTS:
 %   prn: length(n) x len matrix. Each SV's PRN is contained in the rows.
