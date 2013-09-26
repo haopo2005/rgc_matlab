@@ -41,8 +41,8 @@ diffxyz = xyz - refxyz;
 
 % Now rotate the (often short) diffxyz vector to enu frame
 
-R1=coordutil.rot(90+reflon, 3);
-R2=coordutil.rot(90-reflat, 1);
+R1=rotutil.rot(90+reflon, 3);
+R2=rotutil.rot(90-reflat, 1);
 R=R2*R1;
 
 enu=R*diffxyz;

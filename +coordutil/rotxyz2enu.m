@@ -8,8 +8,8 @@
 
 function enu=rotxyz2enu(xyz, lat, lon)
 
-R1=rot(90+lon, 3);
-R2=rot(90-lat, 1);
+R1=rotutil.rot(90+lon, 3);
+R2=rotutil.rot(90-lat, 1);
 
 R=R2*R1;
 enu=R*xyz;
