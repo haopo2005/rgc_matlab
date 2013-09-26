@@ -3,9 +3,10 @@ function [satPositions,satClkCorr]=calc_sv_pos(ephem_data,transmitTime,transitTi
 % CALC_SV_POS calculates satellite positions in ECEF coordinates
 % 
 %   INPUTS:
-
+% 
 %     ephem_data: the large matrix of ephemeris parameters
-%       dimensions: 21xn, where n is the number of sv's
+%       dimensions: 21xn , where n is the number of sv's (currently only
+%           n=1 is supported)
 %     transmitTime:
 %     transitTime:
 % 
@@ -13,9 +14,11 @@ function [satPositions,satClkCorr]=calc_sv_pos(ephem_data,transmitTime,transitTi
 % 
 %     satPositions:
 %     satClkCorr:
+% 
 
 gpsPi = 3.1415926535898;  % Pi used in the GPS coordinate system
 
+% The columns should correspond to these (if made multi-D)
 T_GD=ephem_data(1);
 t_oc=ephem_data(2);
 a_f2=ephem_data(3);
