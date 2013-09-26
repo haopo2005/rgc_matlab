@@ -18,6 +18,5 @@ for idx = 1:sz(2)
   end
 end
 idx = 0; % none found
-return
 
 end
