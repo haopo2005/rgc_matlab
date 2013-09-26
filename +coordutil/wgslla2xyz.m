@@ -19,7 +19,7 @@ function p_e = wgslla2xyz(lat,lon,alt)
 
 %   Load ellipsoid constants
 
-wgs_84_parameters;
+coordutil.wgs_84_parameters;
 deg2rad = pi/180;
 %   Compute East-West Radius of curvature at current position
 

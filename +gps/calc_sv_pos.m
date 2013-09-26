@@ -1,13 +1,20 @@
 function [satPositions,satClkCorr]=calc_sv_pos(ephem_data,transmitTime,transitTime)
-% CALC_SV_POS
+
+% CALC_SV_POS calculates satellite positions in ECEF coordinates
 % 
-%   satellite_ephmeris=[tgd,t_oc,Af2,Af1,Af0,IODC,EphWeekMS,Crs,dn,M0,Cuc,ec,Cus,A,toe,Cic,W0,Cis,i0,Crc,w,WDot,IODE3,Idot];
-% c=299792458;
+%   INPUTS:
+
+%     ephem_data: the large matrix of ephemeris parameters
+%       dimensions: 21xn, where n is the number of sv's
+%     transmitTime:
+%     transitTime:
 % 
-% clock_data=[rcvr1.ephem.tgd(j),rcvr1.ephem.toc(j),rcvr1.ephem.af2(j),rcvr1.ephem.af1(j),rcvr1.ephem.af0(j)];
-% harmonic_data=[rcvr1.ephem.crc(j),rcvr1.ephem.crs(j),rcvr1.ephem.cuc(j),rcvr1.ephem.cus(j),rcvr1.ephem.cic(j),rcvr1.ephem.cis(j)];
-% orbit_data=[rcvr1.ephem.dN(j),rcvr1.ephem.Mo(j),rcvr1.ephem.ecc(j),sqrt(rcvr1.ephem.A(j)),rcvr1.ephem.toe(j),rcvr1.ephem.wo(j),rcvr1.ephem.Io(j),rcvr1.ephem.omega(j),rcvr1.ephem.dw(j),rcvr1.ephem.dI(j)];
-% ephem_data=[clock_data,harmonic_data,orbit_data];
+%   OUTPUTS:
+% 
+%     satPositions:
+%     satClkCorr:
+
+gpsPi = 3.1415926535898;  % Pi used in the GPS coordinate system
 
 T_GD=ephem_data(1);
 t_oc=ephem_data(2);
@@ -32,10 +39,6 @@ i_0=ephem_data(18);
 omega=ephem_data(19);
 dot_Omega=ephem_data(20);
 Idot=ephem_data(21);
-
-
-% GPS constatns
-gpsPi = 3.1415926535898;  % Pi used in the GPS coordinate system
 
 %--- Constants for satellite position calculation -------------------------
 Omegae_dot = 7.2921151467e-5;  % Earth rotation rate, [rad/s]
@@ -97,7 +100,7 @@ r = a * (1 - e*cos(E)) + C_rc * cos(2*phi) + C_rs * sin(2*phi);
 i = i_0 + Idot * tk + C_ic * cos(2*phi) + C_is * sin(2*phi);
 
 %Compute the angle between the ascending node and the Greenwich meridian
-Omega = Omega_0 + (dot_Omega - Omegae_dot)*tk - Omegae_dot * t_oe-Omegae_dot *transitTime;
+Omega = Omega_0 + (dot_Omega-Omegae_dot)*tk - Omegae_dot*t_oe - Omegae_dot*transitTime;
 %Reduce to between 0 and 360 deg
 Omega = rem(Omega + 2*gpsPi, 2*gpsPi);
 
@@ -111,6 +114,8 @@ satClkCorr(satNr) = (a_f2 * dt + a_f1) * dt + a_f0 - T_GD + dtr;
 
 end
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Auxiliary Function %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function corrTime = check_t(time)
 % CHECK_T accounting for beginning or end of week crossover.
@@ -138,6 +143,6 @@ elseif time < -half_week
 end
 
 end
-%%%%%%% end check_t.m  %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% end check_t.m %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 

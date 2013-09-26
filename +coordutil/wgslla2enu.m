@@ -13,7 +13,7 @@ function enu = wgslla2enu(lat, lon, alt, reflat, reflon, refalt)
 % to be in the same directory
 % 
 
-xyz = wgslla2xyz(lat, lon, alt);
-enu = wgsxyz2enu(xyz, reflat, reflon, refalt);
+xyz = coordutil.wgslla2xyz(lat, lon, alt);
+enu = coordutil.wgsxyz2enu(xyz, reflat, reflon, refalt);
 
 end
