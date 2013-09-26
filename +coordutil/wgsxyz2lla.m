@@ -36,8 +36,14 @@ function [wlat, wlon, walt] = wgsxyz2lla(xyz)
 		%	the residuals on rho and z progressively smaller.  Loop
 		%	is implemented as a 'while' instead of a 'do' to simplify
 		%	porting to MATLAB
-
-		while ((abs(rhoerror) > 1e-6) | (abs(zerror) > 1e-6)) 
+        breakpt=10000;
+        count=1;
+		while ((abs(rhoerror) > 1e-6) | (abs(zerror) > 1e-6 )) 
+            %fprintf('%10.3f\n',count);
+            count=count+1;
+            if count>breakpt
+                break;
+            end
 			slat = sin(templat);
 			clat = cos(templat);
 			q = 1 - NAV_E2*slat*slat;
@@ -63,8 +69,8 @@ function [wlat, wlon, walt] = wgsxyz2lla(xyz)
 			invdet = 1.0/(aa*dd - bb*cc);
 			templat = templat - invdet*(+dd*rhoerror -bb*zerror);
 			tempalt = tempalt - invdet*(-cc*rhoerror +aa*zerror);
-		end
-
+        end
+      
 		wlat = templat*rad2deg;
 		walt = tempalt;
 	end
