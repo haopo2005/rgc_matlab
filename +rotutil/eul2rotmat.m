@@ -1,4 +1,4 @@
-function R = rotate3(varargin)
+function R = eul2rotmat(varargin)
 %% ROTATE3 creates rotation matrices given the 3-axis rotation angles (eulerian)
 % Rotate first about the x-axis, then the y-axis, and finally about the
 % z-axis.
