@@ -17,6 +17,7 @@ function Omega = eul2dcm(varargin)
 % 
 % TODO:
 %   - length checking for inputs - do 3-D arrays of output
+%   - reevaluate this to make sure it's correct
 % Author: Robert Cofield
 % 
 
