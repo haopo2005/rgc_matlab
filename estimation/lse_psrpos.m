@@ -3,7 +3,7 @@ genutil.ccc
 %% Truth data and params
 
 pos_true = [0;0;0];
-bias_true = .2;
+bias_true = 1;
 
 svpos = [...
   1 2 3; ...
@@ -29,7 +29,7 @@ psr_meas = psr_true + bias_true;
 pos0 = [3;-7;-1];
 bias0 = 0;
 x_est = [pos0; bias0]; % initial
-x_hist = [x_est];
+x_hist = x_est;
 
 tol = .001;
 maxit = 100;
@@ -47,7 +47,8 @@ while mv > tol
     psr0(k,1) = norm( svpos_meas(k,:)-pos0' ,2) + bias0;
   end
   dpsr = psr_meas - psr0;
-  dx = inv(G'*G)*G'*dpsr;
+%   dx = inv(G'*G)*G'*dpsr;
+  dx = pinv(G)*dpsr;
   x_est = x0 + dx;  
   
   x_hist(:,end+1) = x_est;
