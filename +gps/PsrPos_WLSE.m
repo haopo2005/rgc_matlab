@@ -1,4 +1,4 @@
-function [pos_soln, bias_soln, itx] = PsrPos_LSE(psr, svpos, P0, pos0, bias0, pos_tol, maxit)
+function [pos_soln, bias_soln, itx] = PsrPos_LSE(psr, svpos, R, P0, pos0, bias0, pos_tol, maxit)
 
 % Estimate (Recursive Least Squares) ECEF position using pseudorange estimates
 % 
@@ -27,11 +27,9 @@ mv = pos_tol+1;
 ct = 1;
 
 while mv > pos_tol
-  
   est_old = est;
   x0 = est_old(1:3); % set new initial guess to last solution
   b0 = est_old(4);
-  
   psr0 = zeros(length(svpos),1);
   % calculate psr guess
   for k = 1:length(svpos)
@@ -39,14 +37,17 @@ while mv > pos_tol
   end
   % measurement inputs
   dpsr = psr' - psr0;  
-  
   % calculate design matrix
   G = [gps.calc_geometry_matrix(est(1:3), svpos) ones(length(svpos),1)];  
+  % calculate gain
+  K = P*G'*inv(G*P*G'+R);  
   % new estimate of offset from guess
-  dx = pinv(G)*dpsr;
+  %   dx = dx + K*(dpsr - G*dx);  
+  dx = K*dpsr;
   % resultant position and bias estimates
   est = [x0;b0] + dx;  
-
+  % New estimation error covariance
+  P = (eye(4) - K*G)*P;    
   mv = norm(dx(1:3), 2);
   if ct>maxit
     break;

@@ -1,5 +1,6 @@
 function varargout = solve_rotate3(R)
-%% SOLVE_ROTATE3 solves a 3D rotation matrix for its 3 constituent Euler angles
+%% SOLVE_ROTATE3 has been deprecated. See rotmat2eul123
+% solves a 3D rotation matrix for its 3 constituent Euler angles
 % 
 % https://truesculpt.googlecode.com/hg-history/38000e9dfece971460473d5788c235fbbe82f31b/Doc/rotation_matrix_to_euler.pdf
 % 
