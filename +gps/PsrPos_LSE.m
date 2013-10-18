@@ -1,4 +1,4 @@
-function [pos_soln, bias_soln, itx] = PsrPos_LSE(psr, svpos, P0, pos0, bias0, pos_tol, maxit)
+function [pos_soln, bias_soln, itx, dop] = PsrPos_LSE(psr, svpos, P0, pos0, bias0, pos_tol, maxit)
 
 % Estimate (Recursive Least Squares) ECEF position using pseudorange estimates
 % 
@@ -18,7 +18,9 @@ function [pos_soln, bias_soln, itx] = PsrPos_LSE(psr, svpos, P0, pos0, bias0, po
 % OUTPUTS:
 %   pos_soln: 3x1 ECEF position solution
 %   bias_soln: user clock bias solution (m)
-% 
+%   itx: number of iterations required to converge
+%   dop: matrix of various dilutions of precision
+%     [HDOP, VDOP, PDOP, TDOP, GDOP]
 
 P = P0;
 est = [pos0;bias0];
@@ -60,5 +62,8 @@ pos_soln = est(1:3);
 bias_soln = est(4);
 if nargout > 2
   itx = ct-1;
+  if nargout > 3
+    dop = gps.calcDOP(G);
+  end
 end
 

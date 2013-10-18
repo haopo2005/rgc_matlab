@@ -1,6 +1,7 @@
-function [pos_soln, bias_soln, itx] = PsrPos_LSE(psr, svpos, R, P0, pos0, bias0, pos_tol, maxit)
+function [pos_soln, bias_soln, itx] = PsrPos_WLSE(psr, svpos, R, P0, pos0, bias0, pos_tol, maxit)
 
-% Estimate (Recursive Least Squares) ECEF position using pseudorange estimates
+% Estimate (Recursive Weighted Least Squares) ECEF position using
+% pseudorange estimates
 % 
 % USAGE:
 %   [pos_soln, bias_soln, itx] = PsrPos_LSE(psr, svpos, R, P0, pos0, bias0, pos_tol, maxit)

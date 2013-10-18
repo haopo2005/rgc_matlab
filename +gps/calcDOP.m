@@ -1,18 +1,21 @@
-function [HDOP, VDOP, PDOP, TDOP, GDOP] = calcDOP(H)
+function DOP = calcDOP(H)
 
-% 
+% Calculate Dilutions of precision, given a Geometry Matrix
 % 
 % INPUTS:
 %   H: Geometry Matrix
-% 
+% OUTPUTS:
+%   DOP: all the various dilution of precision information
 
 
-H_tilde = inv(H'*H);
+H_ = inv(H'*H);
 
-HDOP = sqrt(H_tilde(1,1) + H_tilde(2,2));
-VDOP = sqrt(H_tilde(3,3));
-PDOP = sqrt(H_tilde(1,1) + H_tilde(2,2) + H_tilde(3,3));
-TDOP = sqrt(H_tilde(4,4));
-GDOP = sqrt(trace(H_tilde));
+HDOP = sqrt(H_(1,1) + H_(2,2));
+VDOP = sqrt(H_(3,3));
+PDOP = sqrt(H_(1,1) + H_(2,2) + H_(3,3));
+TDOP = sqrt(H_(4,4));
+GDOP = sqrt(trace(H_));
+
+DOP = [HDOP, VDOP, PDOP, TDOP, GDOP];
 
 end
