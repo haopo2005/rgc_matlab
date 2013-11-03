@@ -2,6 +2,9 @@ function varargout = calc_azel(userpos, svpos)
 
 % CALC_AZEL finds the azimuth and elevation of each satellite given a user
 % position.
+% 
+% THIS FUNCTION DOESN'T WORK PROPERLY. IT NEEDS REDOING.
+% 
 % USAGE:
 %   ae = CALC_AZEL(userpos, svpos)
 %   [az,el] = CALC_AZEL(userpos, svpos)
@@ -16,20 +19,27 @@ function varargout = calc_azel(userpos, svpos)
 %   az: 1st row of ae
 %   el: 2nd row of ae
 % DEPENDENCIES:
-%   coordu
+%   
+% 
+
+% TODO check size of inputs
 
 nsv = size(svpos); nsv = nsv(1);
 
-rays_ecef = svpos - repmat(userpos, nsv,1);
-[reflat, reflon, ~] = coordutil.wgsxyz2lla(userpos, 100);
+% outputs
 az = zeros(1,nsv);
 el = zeros(1,nsv);
+
+% vectors from user to sv
+svvecs = svpos - repmat(userpos, nsv,1);
+% unit vector of user
+user_uv = userpos/norm(userpos);
+
 for k = 1:nsv
-  enu = coordutil.rotxyz2enu(rays_ecef(k,:)', reflat,reflon);
-  az(k) = atan2(enu(1),enu(2));
-%   gnd_proj = norm(enu(1:2),2);
-  svdist = norm(enu);
-  el(k) = asin(enu(3)/svdist);
+  sv_onto_user = dot(svpos(k,:),user_uv);
+  theta = acos((sv_onto_user-norm(userpos))/norm(svvecs(k,:)));
+  el(k) = pi/2 - theta;
+  az(k) = 0;
 end
 
 if nargout == 1

@@ -1,4 +1,4 @@
-function DOP = calcDOP(H)
+function DOP = calcDOP2D(H)
 
 % Calculate Dilutions of precision, given a Geometry Matrix
 % 

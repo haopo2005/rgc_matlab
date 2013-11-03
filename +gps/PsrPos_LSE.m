@@ -1,15 +1,13 @@
-function [pos_soln, bias_soln, itx, dop] = PsrPos_LSE(psr, svpos, P0, pos0, bias0, pos_tol, maxit)
+function [pos_soln, bias_soln, itx, dop] = PsrPos_LSE(psr, svpos, pos0, bias0, pos_tol, maxit)
 
 % Estimate (Recursive Least Squares) ECEF position using pseudorange estimates
 % 
 % USAGE:
-%   [pos_soln, bias_soln, itx] = PsrPos_LSE(psr, svpos, R, P0, pos0, bias0, pos_tol, maxit)
+%   [pos_soln, bias_soln, itx, dop] = PsrPos_LSE(psr, svpos, pos0, bias0, pos_tol, maxit)
 %   
 % INPUTS:
 %   psr: Nx1 matrix of Pseudoranges from each satellite
 %   svpos: Nx3 matrix of ECEF SV Positions
-%   R: measurement covariance matrix
-%   P0: Initial Estimate error covariance matrix
 %   pos0: Initial position guess
 %   bias0: Intial clock bias guess
 %   pos_tol: iterate when norm of position change is below this
@@ -22,7 +20,6 @@ function [pos_soln, bias_soln, itx, dop] = PsrPos_LSE(psr, svpos, P0, pos0, bias
 %   dop: matrix of various dilutions of precision
 %     [HDOP, VDOP, PDOP, TDOP, GDOP]
 
-P = P0;
 est = [pos0;bias0];
 
 mv = pos_tol+1;
